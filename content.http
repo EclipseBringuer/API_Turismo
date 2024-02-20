@@ -1,0 +1,11 @@
+### Obtener todas las comunidades
+GET http://localhost:8080/comunidades
+
+### Obtener todas las provincias por id de comunidad
+GET http://localhost:8080/20/provincias
+
+### Obtener todos los puntos de interes por provincia
+GET http://localhost:8080/9/puntosInteres
+
+### Obtener toda la información de los usuarios
+GET http://localhost:8080/users/getAll
