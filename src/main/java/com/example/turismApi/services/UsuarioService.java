@@ -1,12 +1,13 @@
 package com.example.turismApi.services;
 
-import com.example.turismApi.model.dto.UsuarioDTO;
+import com.example.turismApi.model.dto.InfoUsuarioDTO;
 import com.example.turismApi.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UsuarioService {
@@ -17,12 +18,10 @@ public class UsuarioService {
         this.usuarioRepository = usuarioRepository;
     }
 
-    public List<UsuarioDTO> getAllUsuarioDTO() {
-        List<UsuarioDTO> output = new ArrayList<>();
-        var users = usuarioRepository.findAll();
-        for (var user : users) {
-            output.add(new UsuarioDTO(user.getName(), user.getGmail()));
-        }
-        return output;
+    public List<InfoUsuarioDTO> getAllUsuarioDTO() {
+        var output = usuarioRepository.findAll();
+        return output.stream()
+                .map(u -> new InfoUsuarioDTO(u.getName(), u.getGmail()))
+                .collect(Collectors.toList());
     }
 }
