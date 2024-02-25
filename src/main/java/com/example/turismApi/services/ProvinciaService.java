@@ -12,15 +12,29 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Servicio que proporciona operaciones relacionadas con provincias.
+ */
 @Service
 public class ProvinciaService {
     private final ProvinciaRepository provinciaRepository;
 
+    /**
+     * Constructor del servicio ProvinciaService.
+     *
+     * @param provinciaRepository Repositorio de provincias.
+     */
     @Autowired
     public ProvinciaService(ProvinciaRepository provinciaRepository) {
         this.provinciaRepository = provinciaRepository;
     }
 
+    /**
+     * Obtiene todas las provincias de una comunidad por su ID.
+     *
+     * @param id ID de la comunidad.
+     * @return Lista de InfoProvinciaDTO.
+     */
     public List<InfoProvinciaDTO> getAllProvinciasByComunidadId(Integer id) {
         var output = provinciaRepository.findAllByComunidadId(id);
         return output.stream()
@@ -28,6 +42,12 @@ public class ProvinciaService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Obtiene información detallada sobre una provincia específica por su ID.
+     *
+     * @param id ID de la provincia.
+     * @return InfoProvinciaDTO de la provincia encontrada.
+     */
     public InfoProvinciaDTO getById(Integer id){
         InfoProvinciaDTO output = null;
         if(provinciaRepository.existsById(id)){
@@ -36,6 +56,12 @@ public class ProvinciaService {
         return output;
     }
 
+    /**
+     * Convierte una entidad Provincia a su representación DTO.
+     *
+     * @param p Provincia a convertir.
+     * @return InfoProvinciaDTO resultante.
+     */
     private List<InfoPuntoInteresEnProvinciaDTO> convertPuntoInteresToInfoDTO(List<PuntoInteres> list) {
         List<InfoPuntoInteresEnProvinciaDTO> output = new ArrayList<>();
         for (PuntoInteres poi : list) {
@@ -44,6 +70,12 @@ public class ProvinciaService {
         return output;
     }
 
+    /**
+     * Convierte una lista de entidades PuntoInteres a su representación DTO.
+     *
+     * @param list Lista de puntos de interés a convertir.
+     * @return Lista de InfoPuntoInteresEnProvinciaDTO resultante.
+     */
     private InfoProvinciaDTO convertProvinciaToInfoDTO(Provincia p){
         return new InfoProvinciaDTO(p.getId(), p.getName(), p.getLatitud(), p.getLongitud(), convertPuntoInteresToInfoDTO(p.getPuntosInteres()));
     }

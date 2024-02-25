@@ -14,15 +14,28 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Servicio que proporciona operaciones relacionadas con puntos de interés turístico.
+ */
 @Service
 public class PuntoInteresService {
     private final PuntoInteresRepository puntoInteresRepository;
 
+    /**
+     * Constructor del servicio PuntoInteresService.
+     *
+     * @param puntoInteresRepository Repositorio de puntos de interés.
+     */
     @Autowired
     public PuntoInteresService(PuntoInteresRepository puntoInteresRepository) {
         this.puntoInteresRepository = puntoInteresRepository;
     }
 
+    /**
+     * Obtiene información detallada sobre todos los puntos de interés.
+     *
+     * @return Lista de InfoPuntoInteresDTO.
+     */
     public List<InfoPuntoInteresDTO> getAll(){
         var output = puntoInteresRepository.findAll();
         return output.stream()
@@ -38,6 +51,12 @@ public class PuntoInteresService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Obtiene información detallada sobre los puntos de interés en una provincia específica por su ID.
+     *
+     * @param id ID de la provincia.
+     * @return Lista de InfoPuntoInteresDTO.
+     */
     public List<InfoPuntoInteresDTO> getAllByProvinciaId(Integer id) {
         var output = puntoInteresRepository.getAllById_provincia(id);
         return output.stream()
@@ -53,6 +72,12 @@ public class PuntoInteresService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Convierte una lista de entidades Comentario a su representación DTO.
+     *
+     * @param list Lista de comentarios a convertir.
+     * @return Lista de ComentarioToPuntoInteresDTO resultante.
+     */
     private List<ComentarioToPuntoInteresDTO> convertComentarioToInfoDTO(List<Comentario> list) {
         List<ComentarioToPuntoInteresDTO> output = new ArrayList<>();
         for (Comentario c : list) {
@@ -60,6 +85,12 @@ public class PuntoInteresService {
         }
         return output;
     }
+    /**
+     * Convierte una lista de entidades Valoracion a su representación DTO.
+     *
+     * @param list Lista de valoraciones a convertir.
+     * @return Lista de ValoracionToPuntoInteresDTO resultante.
+     */
 
     private List<ValoracionToPuntoInteresDTO> convertValoracionToInfoDTO(List<Valoracion> list) {
         List<ValoracionToPuntoInteresDTO> output = new ArrayList<>();
@@ -69,6 +100,12 @@ public class PuntoInteresService {
         return output;
     }
 
+    /**
+     * Obtiene información detallada sobre un punto de interés específico por su ID.
+     *
+     * @param id ID del punto de interés.
+     * @return InfoPuntoInteresDTO del punto de interés encontrado.
+     */
     public InfoPuntoInteresDTO getById(Integer id) {
         InfoPuntoInteresDTO output = null;
         if (puntoInteresRepository.existsById(id)) {
@@ -77,6 +114,12 @@ public class PuntoInteresService {
         return output;
     }
 
+    /**
+     * Obtiene un punto de interés por su ID sin convertirlo a DTO.
+     *
+     * @param id ID del punto de interés.
+     * @return Punto de interés encontrado.
+     */
     public PuntoInteres getByIdNotDTO(Integer id){
         PuntoInteres output = null;
         if(puntoInteresRepository.existsById(id)){
@@ -85,6 +128,12 @@ public class PuntoInteresService {
         return output;
     }
 
+    /**
+     * Convierte una entidad PuntoInteres a su representación DTO.
+     *
+     * @param poi Punto de interés a convertir.
+     * @return InfoPuntoInteresDTO resultante.
+     */
     private InfoPuntoInteresDTO convertPuntoInteresToInfoDTO(PuntoInteres poi) {
         return new InfoPuntoInteresDTO(poi.getName(),
                 poi.getTipoTurismo(),

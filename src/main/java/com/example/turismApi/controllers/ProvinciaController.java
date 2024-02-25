@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Controlador para manejar operaciones relacionadas con provincias.
+ */
 @RestController
 @RequestMapping("/provincias")
 public class ProvinciaController {
@@ -20,8 +23,15 @@ public class ProvinciaController {
     @Autowired
     private SecurityService securityService;
 
+    /**
+     * Obtiene todas las provincias en base al ID de una comunidad.
+     *
+     * @param token Token de autenticación del usuario.
+     * @param id    ID de la comunidad.
+     * @return ResponseEntity con una lista de InfoProvinciaDTO en caso de éxito, NOT_FOUND si no hay provincias para la comunidad, o UNAUTHORIZED si el token no es válido.
+     */
+    @Operation(summary = "Obtener todas las provincias en base al ID de una comunidad")
     @GetMapping("/getByComunidad/{id}")
-    @Operation(summary = "Obtiene todas las provincias en base al id de una comunidad")
     public ResponseEntity<List<InfoProvinciaDTO>> getAllByComunidadId(@RequestParam("token") String token, @PathVariable Integer id) {
         if (securityService.validateToken(token)) {
             var output = provinciaService.getAllProvinciasByComunidadId(id);
@@ -35,6 +45,14 @@ public class ProvinciaController {
         }
     }
 
+    /**
+     * Obtiene una provincia por su ID.
+     *
+     * @param token Token de autenticación del usuario.
+     * @param id    ID de la provincia.
+     * @return ResponseEntity con InfoProvinciaDTO en caso de éxito, NOT_FOUND si la provincia no se encuentra, o UNAUTHORIZED si el token no es válido.
+     */
+    @Operation(summary = "Obtener provincia por ID")
     @GetMapping("/getById/{id}")
     public ResponseEntity<InfoProvinciaDTO> getById(@RequestParam("token") String token, @PathVariable Integer id) {
         if (securityService.validateToken(token)) {
