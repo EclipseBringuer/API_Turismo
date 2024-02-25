@@ -71,12 +71,20 @@ public class ComentarioService {
         }
         if (found) {
             comentarioRepository.deleteById(id);
-            output = "Mensaje borrado correctamente";
+            output = "Comentario borrado correctamente";
         }
         return output;
     }
 
     private InfoComentarioDTO convertComentarioToInfoDTO(Comentario c) {
         return new InfoComentarioDTO(c.getUsuario().getName(), c.getPoi().getName(), c.getContenido());
+    }
+
+    public InfoComentarioDTO getComentarioById(Integer id) {
+        InfoComentarioDTO output = null;
+        if (comentarioRepository.existsById(id)) {
+            output = convertComentarioToInfoDTO(comentarioRepository.findById(id).get());
+        }
+        return output;
     }
 }

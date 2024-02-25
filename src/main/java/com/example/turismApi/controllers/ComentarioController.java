@@ -74,4 +74,18 @@ public class ComentarioController {
             return new ResponseEntity<>("Token no válido", HttpStatus.BAD_REQUEST);
         }
     }
+
+    @GetMapping("/get/{id}")
+    public ResponseEntity<InfoComentarioDTO> getComentarioById(@PathVariable Integer id, @RequestParam("token") String token) {
+        if (securityService.validateToken(token)) {
+            var output = comentarioService.getComentarioById(id);
+            if (output != null) {
+                return new ResponseEntity<>(output, HttpStatus.OK);
+            }else{
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } else {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+    }
 }
