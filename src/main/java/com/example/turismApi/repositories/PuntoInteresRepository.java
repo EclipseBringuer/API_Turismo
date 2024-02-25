@@ -12,5 +12,6 @@ public interface PuntoInteresRepository extends JpaRepository<PuntoInteres, Inte
     @Query("SELECT pi FROM PuntoInteres pi WHERE pi.provincia.id=:id")
     List<PuntoInteres> getAllById_provincia(@Param("id")Integer id);
 
-    PuntoInteres getPuntoInteresBy(Integer id);
+    @Query("SELECT pi FROM PuntoInteres pi WHERE pi.id=:id")
+    PuntoInteres getPuntoInteresBy(@Param("id")Integer id);
 }
