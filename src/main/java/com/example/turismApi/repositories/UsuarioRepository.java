@@ -12,4 +12,5 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
     Integer getMaxId();
 
     Usuario getUsuarioByGmailAndPass(String gmail, String pass);
+    void deleteByToken(String token);
 }

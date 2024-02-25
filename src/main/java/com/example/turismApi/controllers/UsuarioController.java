@@ -47,4 +47,28 @@ public class UsuarioController {
             return new ResponseEntity<>(token, HttpStatus.UNAUTHORIZED);
         }
     }
+
+    @GetMapping("/getById/{id}")
+    public ResponseEntity<InfoUsuarioDTO> getById(@PathVariable Integer id, @RequestParam("token") String token){
+        if(securityService.validateToken(token)){
+            var output = usuarioService.getById(id);
+            if (output!=null){
+                return new ResponseEntity<>(output, HttpStatus.OK);
+            }else{
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        }else{
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+    }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<String> delete(@RequestParam("token") String token){
+        if (securityService.validateToken(token)) {
+            usuarioService.deleteByToken(token);
+            return new ResponseEntity<>("Usuario eliminado correctamente", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+    }
 }

@@ -50,6 +50,18 @@ public class UsuarioService {
         return output;
     }
 
+    public InfoUsuarioDTO getById(Integer id){
+        InfoUsuarioDTO output = null;
+        if(usuarioRepository.existsById(id)){
+            output = convertUsuarioToInfoDTO(usuarioRepository.findById(id).get());
+        }
+        return output;
+    }
+
+    private InfoUsuarioDTO convertUsuarioToInfoDTO(Usuario u){
+        return new InfoUsuarioDTO(u.getName(), u.getGmail());
+    }
+
     private Usuario convertSignUpUserDTOToUser(SignUpUserDTO upUserDTO) {
         Usuario u = new Usuario();
         u.setName(upUserDTO.name());
@@ -58,4 +70,7 @@ public class UsuarioService {
         return u;
     }
 
+    public void deleteByToken(String token){
+        usuarioRepository.deleteByToken(token);
+    }
 }
