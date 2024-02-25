@@ -1,11 +1,11 @@
 package com.example.turismApi.services;
 
 import com.example.turismApi.model.dto.InfoUsuarioDTO;
+import com.example.turismApi.model.dto.SignUpUserDTO;
+import com.example.turismApi.model.entity.Usuario;
 import com.example.turismApi.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,5 +23,27 @@ public class UsuarioService {
         return output.stream()
                 .map(u -> new InfoUsuarioDTO(u.getName(), u.getGmail()))
                 .collect(Collectors.toList());
+    }
+
+    public Usuario getByToken(String token) {
+        return usuarioRepository.getByToken(token);
+    }
+
+    public Integer getMaxId(){
+        return usuarioRepository.getMaxId();
+    }
+
+    public Usuario signUp(SignUpUserDTO u, String token){
+        var user = convertSignUpUserDTOToUser(u);
+        user.setToken(token);
+        return usuarioRepository.save(user);
+    }
+
+    private Usuario convertSignUpUserDTOToUser(SignUpUserDTO upUserDTO){
+        Usuario u = new Usuario();
+        u.setName(upUserDTO.name());
+        u.setGmail(upUserDTO.gmail());
+        u.setPass(upUserDTO.pass());
+        return u;
     }
 }
