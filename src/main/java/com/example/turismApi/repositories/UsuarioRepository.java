@@ -10,4 +10,6 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
     Usuario getByToken(String token);
     @Query("SELECT u.id FROM Usuario u ORDER BY u.id DESC LIMIT 1")
     Integer getMaxId();
+
+    Usuario getUsuarioByGmailAndPass(String gmail, String pass);
 }
