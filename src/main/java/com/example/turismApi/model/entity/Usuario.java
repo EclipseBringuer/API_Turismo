@@ -19,7 +19,7 @@ public class Usuario {
     @Column(name = "token")
     private String token;
 
-    @OneToMany(mappedBy = "usuario")
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comentario> comentarios;
 
     public Usuario() {
