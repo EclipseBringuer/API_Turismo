@@ -1,7 +1,8 @@
 package com.example.turismApi.controllers;
 
-import com.example.turismApi.model.dto.InfoUsuarioDTO;
-import com.example.turismApi.model.dto.SignUpUserDTO;
+import com.example.turismApi.model.dto.user.InfoUsuarioDTO;
+import com.example.turismApi.model.dto.user.LogInUserDTO;
+import com.example.turismApi.model.dto.user.SignUpUserDTO;
 import com.example.turismApi.model.entity.Usuario;
 import com.example.turismApi.services.SecurityService;
 import com.example.turismApi.services.UsuarioService;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/users")
@@ -26,13 +28,23 @@ public class UsuarioController {
         if (securityService.validateToken(token)) {
             var output = usuarioService.getAllUsuarioDTO();
             return new ResponseEntity<>(output, HttpStatus.OK);
-        }else{
+        } else {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
     }
 
     @PostMapping("/signUp")
-    public ResponseEntity<Usuario> signUp(@Valid @RequestBody SignUpUserDTO u){
-        return new ResponseEntity<>(usuarioService.signUp(u,securityService.generateToken()),HttpStatus.OK);
+    public ResponseEntity<Usuario> signUp(@Valid @RequestBody SignUpUserDTO u) {
+        return new ResponseEntity<>(usuarioService.signUp(u, securityService.generateToken()), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@Valid @RequestBody LogInUserDTO logInUserDTO) {
+        var token = usuarioService.logIn(logInUserDTO);
+        if (!Objects.equals(token, "Error al iniciar sesión")) {
+            return new ResponseEntity<>("Cuenta comprobada, tu token de acceso es: " + token, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(token, HttpStatus.UNAUTHORIZED);
+        }
     }
 }
