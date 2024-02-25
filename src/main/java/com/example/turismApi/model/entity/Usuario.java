@@ -2,6 +2,8 @@ package com.example.turismApi.model.entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "usuario")
 public class Usuario {
@@ -17,16 +19,20 @@ public class Usuario {
     @Column(name = "token")
     private String token;
 
+    @OneToMany(mappedBy = "usuario")
+    private List<Comentario> comentarios;
+
     public Usuario() {
 
     }
 
-    public Usuario(Integer id, String name, String gmail, String pass, String token) {
+    public Usuario(Integer id, String name, String gmail, String pass, String token, List<Comentario> comentarios) {
         this.id = id;
         this.name = name;
         this.gmail = gmail;
         this.pass = pass;
         this.token = token;
+        this.comentarios = comentarios;
     }
 
     public Integer getId() {
@@ -69,6 +75,14 @@ public class Usuario {
         this.name = name;
     }
 
+    public List<Comentario> getComentarios() {
+        return comentarios;
+    }
+
+    public void setComentarios(List<Comentario> comentarios) {
+        this.comentarios = comentarios;
+    }
+
     @Override
     public String toString() {
         return "Usuario{" +
@@ -77,6 +91,7 @@ public class Usuario {
                 ", gmail='" + gmail + '\'' +
                 ", pass='" + pass + '\'' +
                 ", token='" + token + '\'' +
+                ", comentarios=" + comentarios +
                 '}';
     }
 }
