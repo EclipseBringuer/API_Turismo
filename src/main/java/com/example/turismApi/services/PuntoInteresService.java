@@ -18,4 +18,8 @@ public class PuntoInteresService {
     public List<PuntoInteres> getAllByProvinciaId(Integer id){
         return puntoInteresRepository.getAllById_provincia(id);
     }
+
+    public PuntoInteres getById(Integer id){
+        return puntoInteresRepository.getPuntoInteresBy(id);
+    }
 }
