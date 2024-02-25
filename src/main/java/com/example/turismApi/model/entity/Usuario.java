@@ -22,17 +22,21 @@ public class Usuario {
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comentario> comentarios;
 
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Valoracion> valoraciones;
+
     public Usuario() {
 
     }
 
-    public Usuario(Integer id, String name, String gmail, String pass, String token, List<Comentario> comentarios) {
+    public Usuario(Integer id, String name, String gmail, String pass, String token, List<Comentario> comentarios, List<Valoracion> valoraciones) {
         this.id = id;
         this.name = name;
         this.gmail = gmail;
         this.pass = pass;
         this.token = token;
         this.comentarios = comentarios;
+        this.valoraciones = valoraciones;
     }
 
     public Integer getId() {
@@ -83,6 +87,14 @@ public class Usuario {
         this.comentarios = comentarios;
     }
 
+    public List<Valoracion> getValoraciones() {
+        return valoraciones;
+    }
+
+    public void setValoraciones(List<Valoracion> valoraciones) {
+        this.valoraciones = valoraciones;
+    }
+
     @Override
     public String toString() {
         return "Usuario{" +
@@ -92,6 +104,7 @@ public class Usuario {
                 ", pass='" + pass + '\'' +
                 ", token='" + token + '\'' +
                 ", comentarios=" + comentarios +
+                ", valoraciones=" + valoraciones +
                 '}';
     }
 }
