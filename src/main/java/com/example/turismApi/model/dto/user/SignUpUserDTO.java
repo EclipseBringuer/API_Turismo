@@ -1,4 +1,4 @@
-package com.example.turismApi.model.dto;
+package com.example.turismApi.model.dto.user;
 
 import jakarta.validation.constraints.NotBlank;
 
