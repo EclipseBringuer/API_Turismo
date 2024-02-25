@@ -48,7 +48,7 @@ public class ValoracionService {
     public InfoValoracionDTO createNewValoracion(String token, NewValoracionDTO valoracionDTO) {
         InfoValoracionDTO output = null;
         var user = usuarioService.getByToken(token);
-        var poi = puntoInteresService.getById(valoracionDTO.id_poi());
+        var poi = puntoInteresService.getByIdNotDTO(valoracionDTO.id_poi());
         if (poi != null) {
             var comentario = new Valoracion();
             comentario.setPuntuacion(valoracionDTO.valoracion());

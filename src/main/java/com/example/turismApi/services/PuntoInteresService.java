@@ -77,6 +77,14 @@ public class PuntoInteresService {
         return output;
     }
 
+    public PuntoInteres getByIdNotDTO(Integer id){
+        PuntoInteres output = null;
+        if(puntoInteresRepository.existsById(id)){
+            output = puntoInteresRepository.findById(id).get();
+        }
+        return output;
+    }
+
     private InfoPuntoInteresDTO convertPuntoInteresToInfoDTO(PuntoInteres poi) {
         return new InfoPuntoInteresDTO(poi.getName(),
                 poi.getTipoTurismo(),

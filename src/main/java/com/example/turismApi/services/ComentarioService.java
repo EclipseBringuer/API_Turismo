@@ -48,7 +48,7 @@ public class ComentarioService {
     public InfoComentarioDTO createNewComentario(String token, NewComentarioDTO comentarioDTO) {
         InfoComentarioDTO output = null;
         var user = usuarioService.getByToken(token);
-        var poi = puntoInteresService.getById(comentarioDTO.id_poi());
+        var poi = puntoInteresService.getByIdNotDTO(comentarioDTO.id_poi());
         if (poi != null) {
             var comentario = new Comentario();
             comentario.setContenido(comentarioDTO.content());
