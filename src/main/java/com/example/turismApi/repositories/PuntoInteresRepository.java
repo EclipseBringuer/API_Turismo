@@ -11,7 +11,4 @@ import java.util.List;
 public interface PuntoInteresRepository extends JpaRepository<PuntoInteres, Integer> {
     @Query("SELECT pi FROM PuntoInteres pi WHERE pi.provincia.id=:id")
     List<PuntoInteres> getAllById_provincia(@Param("id")Integer id);
-
-    @Query("SELECT pi FROM PuntoInteres pi WHERE pi.id=:id")
-    PuntoInteres getPuntoInteresBy(@Param("id")Integer id);
 }
